@@ -11,12 +11,14 @@ class SubPos:
 
 @dataclass
 class SubVel:
-    x: float
-    y: float
-    z: float
-    roll: float
-    pitch: float
-    yaw: float
+    M1 : float
+    M2 : float
+    M3 : float
+    M4 : float
+    M5 : float
+    M6 : float
+    M7 : float
+    M8 : float
 
 @dataclass
 class SubData:
@@ -28,7 +30,12 @@ class Controller:
     def __init__(self, args: argparse.Namespace) -> None:
         self.unity_comms = UnityComms(port=args.port)
 
-        self.controller_url = "http://localhost:5001/inputs"
+        self.controller_url = "http://localhost:5001/outputs"
+
+        self.in_max = 2000
+        self.in_min = 1000
+        self.out_max = 1.0
+        self.out_min = -1.0
 
     def get_sub_pos(self) -> SubPos:
         return self.unity_comms.GetPos(ResultClass=SubPos)
@@ -42,10 +49,17 @@ class Controller:
     def get_sub_depth(self) -> float:
         return self.unity_comms.GetDistanceToFloor()
     
+    def mapping(self, val : int) -> float:
+        return (val - self.in_min) * (self.out_max - self.out_min) / (self.in_max - self.in_min) + self.out_min
+
     def get_controller_vels(self) -> SubData:
         response = requests.get(self.controller_url)
         DOFRawData = response.json()
-        return SubVel(DOFRawData['X'], DOFRawData['Y'], DOFRawData['Z'], DOFRawData['Roll'], DOFRawData['Pitch'], DOFRawData['Yaw'])
+        for key in DOFRawData.keys():
+            DOFRawData[key] = self.mapping(DOFRawData[key])
+        return SubVel(DOFRawData['M1'], DOFRawData['M2'], DOFRawData['M3'], \
+                      DOFRawData['M4'], DOFRawData['M5'], DOFRawData['M6'],\
+                      DOFRawData['M7'], DOFRawData['M8'])
 
     def debug(self, pos:SubPos, vel:SubVel, depth:float) -> None:
         print(f"Pos: {pos}\nVel: {vel}\nDepth: {depth}")
