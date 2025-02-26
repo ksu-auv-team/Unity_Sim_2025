@@ -32,8 +32,8 @@ class Controller:
 
         self.controller_url = "http://localhost:5001/outputs"
 
-        self.in_max = 2000
-        self.in_min = 1000
+        self.in_max = 255
+        self.in_min = 0
         self.out_max = 1.0
         self.out_min = -1.0
 
