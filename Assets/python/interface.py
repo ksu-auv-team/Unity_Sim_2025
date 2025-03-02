@@ -2,6 +2,7 @@ import argparse
 from dataclasses import dataclass
 from peaceful_pie.unity_comms import UnityComms
 import requests
+import time
 
 @dataclass
 class SubPos:
@@ -10,7 +11,7 @@ class SubPos:
     z: float
 
 @dataclass
-class SubVel:
+class SubMotorVel:
     M1 : float
     M2 : float
     M3 : float
@@ -19,6 +20,15 @@ class SubVel:
     M6 : float
     M7 : float
     M8 : float
+
+@dataclass
+class SubVel:
+    x: float
+    y: float
+    z: float
+    roll: float
+    pitch: float
+    yaw: float
 
 @dataclass
 class SubData:
@@ -32,8 +42,8 @@ class Controller:
 
         self.controller_url = "http://localhost:5001/outputs"
 
-        self.in_max = 255
-        self.in_min = 0
+        self.in_max = 2000
+        self.in_min = 1000
         self.out_max = 1.0
         self.out_min = -1.0
 
@@ -43,8 +53,8 @@ class Controller:
     def get_sub_vel(self) -> SubVel:
         return self.unity_comms.GetVel(ResultClass=SubVel)
     
-    def set_sub_vel(self, vel: SubVel) -> None:
-        self.unity_comms.SetVel(vel)
+    def set_sub_vel(self, vel: SubMotorVel) -> None:
+        self.unity_comms.SetSubMotorVel(vel)
     
     def get_sub_depth(self) -> float:
         return self.unity_comms.GetDistanceToFloor()
@@ -57,25 +67,51 @@ class Controller:
         DOFRawData = response.json()
         for key in DOFRawData.keys():
             DOFRawData[key] = self.mapping(DOFRawData[key])
-        return SubVel(DOFRawData['M1'], DOFRawData['M2'], DOFRawData['M3'], \
+        return SubMotorVel(DOFRawData['M1'], DOFRawData['M2'], DOFRawData['M3'], \
                       DOFRawData['M4'], DOFRawData['M5'], DOFRawData['M6'],\
                       DOFRawData['M7'], DOFRawData['M8'])
 
-    def debug(self, pos:SubPos, vel:SubVel, depth:float) -> None:
+    def debug(self, pos:SubPos, vel:SubMotorVel, depth:float) -> None:
         print(f"Pos: {pos}\nVel: {vel}\nDepth: {depth}")
     
     def run(self) -> None:
         while True:
             pos = self.get_sub_pos()
-            vel = self.get_sub_vel()
+            vel = self.get_controller_vels()
             depth = self.get_sub_depth()
-            controller_vels = self.get_controller_vels()
             self.debug(pos, vel, depth)
-            self.set_sub_vel(controller_vels)
+            time.sleep(0.1)
+
+    def test_run(self) -> None:
+        while True:
+            try:
+                pos = self.get_sub_pos()
+                vel = self.get_sub_vel()
+                depth = self.get_sub_depth()
+                self.debug(pos, vel, depth)
+
+                # Update SubMotorVel with user inputs
+                motor_vels = []
+                for i in range(1, 9):
+                    user_input = input(f"Enter velocity for M{i}: ")
+                    motor_vels.append(float(user_input))
+                vel = SubMotorVel(*motor_vels)
+                self.set_sub_vel(vel)
+
+                # SubMotorVel = SubMotorVel(1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500)
+
+                time.sleep(0.1)
+            except KeyboardInterrupt:
+                break
+            except Exception as e:
+                print(e)
+                break
 
 if __name__ == '__main__':
+    time.sleep(10)
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=5000)
+    parser.add_argument('--port', type=int, default=5005)
     args = parser.parse_args()
     controller = Controller(args)
-    controller.run()
+    # controller.run()
+    controller.test_run()
