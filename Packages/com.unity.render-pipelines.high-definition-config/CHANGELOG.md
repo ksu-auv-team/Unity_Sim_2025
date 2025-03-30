@@ -10,119 +10,97 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [17.0.2] - 2024-04-02
+## [12.1.14] - 2024-04-03
 
-This version is compatible with Unity 6000.0.0b15.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [17.0.1] - 2023-12-21
-
-This version is compatible with Unity 2023.3.0b2.
+This version is compatible with Unity 2021.3.38f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [17.0.0] - 2023-09-26
+## [12.1.13] - 2023-12-21
 
-This version is compatible with Unity 2023.3.0a8.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [16.0.3] - 2023-07-04
-
-This version is compatible with Unity 2023.3.0a1.
+This version is compatible with Unity 2021.3.35f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [16.0.2] - 2023-06-28
+## [12.1.12] - 2023-09-27
 
-This version is compatible with Unity 2023.2.0a22.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [16.0.1] - 2023-05-23
-
-This version is compatible with Unity 2023.2.0a17.
+This version is compatible with Unity 2021.3.31f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [16.0.0] - 2023-03-22
+## [12.1.11] - 2023-05-23
 
-This version is compatible with Unity 2023.2.0a9.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [15.0.3] - 2022-12-02
-
-This version is compatible with Unity 2023.2.0a1.
+This version is compatible with Unity 2021.3.27f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [15.0.2] - 2022-11-04
+## [12.1.10] - 2023-03-24
 
-This version is compatible with Unity 2023.1.0a23.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [15.0.1] - 2022-08-04
-
-This version is compatible with Unity 2023.1.0a19.
+This version is compatible with Unity 2021.3.22f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [15.0.0] - 2022-06-13
+## [12.1.9] - 2022-12-12
 
-This version is compatible with Unity 2023.1.0a6.
-
-Version Updated
-The version number for this package has increased due to a version update of a related graphics package.
-
-## [14.0.3] - 2021-05-09
+This version is compatible with Unity 2021.3.18f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [14.0.2] - 2021-02-04
+## [12.1.8] - 2022-11-04
+
+This version is compatible with Unity 2021.3.16f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [14.0.1] - 2021-12-07
+## [12.1.7] - 2022-03-29
+
+This version is compatible with Unity 2021.3.14f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [14.0.0] - 2021-11-17
+## [12.1.6] - 2022-02-09
+
+This version is compatible with Unity 2021.2.19f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [13.1.2] - 2021-11-05
+## [12.1.5] - 2022-01-14
+
+This version is compatible with Unity 2021.2.14f1.
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [13.1.1] - 2021-10-04
+## [12.1.4] - 2021-12-07
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [13.1.0] - 2021-09-24
+## [12.1.3] - 2021-11-17
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
-## [13.0.0] - 2021-09-01
+## [12.1.2] - 2021-10-22
+
+Version Updated
+The version number for this package has increased due to a version update of a related graphics package.
+
+## [12.1.1] - 2021-10-04
+
+Version Updated
+The version number for this package has increased due to a version update of a related graphics package.
+
+## [12.1.0] - 2021-09-23
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.

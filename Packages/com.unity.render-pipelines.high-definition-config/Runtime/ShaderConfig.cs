@@ -15,15 +15,6 @@ namespace UnityEngine.Rendering.HighDefinition
         Ultra = 255
     }
 
-    internal enum PathTracingLightListSizes
-    {
-        Low = 8,
-        Medium = 16,
-        High = 32,
-        Ultra = 64
-    }
-
-
     /// <summary>
     /// Project-wide shader configuration options.
     /// </summary>
@@ -39,7 +30,7 @@ namespace UnityEngine.Rendering.HighDefinition
         /// <summary>Uses pre-exposition to enhance color precision.</summary>
         PreExposition = 1,
         /// <summary>Precomputes atmospheric attenuation for the directional light on the CPU. This makes it independent from the fragment's position, which increases performance but reduces accuracy.</summary>
-        PrecomputedAtmosphericAttenuation = 1,
+        PrecomputedAtmosphericAttenuation = 0,
 
         /// <summary>Maximum number of views for XR.</summary>
 #if ENABLE_VR
@@ -62,18 +53,7 @@ namespace UnityEngine.Rendering.HighDefinition
         /// Lower count will mean some memory savings.
         /// Note: For any rendering bigger than 4k (in native) it is recommended to use Low count per tile, to avoid possible artifacts.
         /// </summary>
-        FPTLMaxLightCount = FPTLMaxLightSizes.High,
-
-        /// <summary>
-        /// The upper limit for the maximum amount of elements per cell in the light cluster. The maximum can be set in the project settings. This value caps the maximum.
-        /// </summary>
-        LightClusterMaxCellElementCount = 24,
-
-        /// <summary>
-        /// Maximum number of lights used in the path tracer light list. This number can be one of the prespecified possibilities in PathTracingLightListSizes, or can be chosen manually.
-        /// Lower count will mean some memory savings.
-        /// </summary>
-        PathTracingMaxLightCount = PathTracingLightListSizes.Medium
+        FPTLMaxLightCount = FPTLMaxLightSizes.High
     };
 
     // Note: #define can't be use in include file in C# so we chose this way to configure both C# and hlsl
@@ -114,12 +94,6 @@ namespace UnityEngine.Rendering.HighDefinition
         /// <summary>Indicates the maximum number of lights available for Fine Prunning Tile Lighting.</summary>
         /// <seealso cref="ShaderOptions.FPTLMaxLightCount"/>
         public static int FPTLMaxLightCount = (int)ShaderOptions.FPTLMaxLightCount;
-        /// <summary>Indicates the cap on the maximum number of elements per cell in the light cluster.</summary>
-        /// <seealso cref="ShaderOptions.LightClusterMaxCellElementCount"/>
-        public const int LightClusterMaxCellElementCount = (int)ShaderOptions.LightClusterMaxCellElementCount;
-        /// <summary>Indicates the maximum number of lights in the path tracing light list.</summary>
-        /// <seealso cref="ShaderOptions.PathTracingMaxLightCount"/>
-        public static int PathTracingMaxLightCount = (int)ShaderOptions.PathTracingMaxLightCount;
     }
 
     /// <summary>
