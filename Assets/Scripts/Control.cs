@@ -181,6 +181,9 @@ public class Control : MonoBehaviour
         
     }
 
+    // Define the method to restart the Sub position
+    // This method is called from the python server to restart the Sub position
+    // Used by Gym to reset the simulation
     void restartPosition()
     {
         sub.transform.position = new Vector3(0, 0, 0);
