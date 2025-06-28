@@ -142,8 +142,26 @@ public class Control : MonoBehaviour
         // Define the setSubSetVel method to set the Sub velocity within the simulation
         [JsonRpcMethod]
         public void setSubSetVel(SubSetVel subSetVel) {
-            control.sub.GetComponent<Rigidbody>().velocity = new Vector3(subSetVel.x, subSetVel.y, subSetVel.z);
-            control.sub.GetComponent<Rigidbody>().angularVelocity = new Vector3(subSetVel.roll, subSetVel.pitch, subSetVel.yaw);
+            Vector3 linear = new Vector3(subSetVel.x, subSetVel.y, subSetVel.z);
+
+            Debug.Log($"Received setSubSetVel: Linear={linear}, Yaw={subSetVel.yaw}");
+
+            // Move linearly in world space
+            control.sub.transform.position += linear * Time.deltaTime;
+
+            // Rotate around the sub's own up axis (Yaw only)
+            if (Mathf.Abs(subSetVel.yaw) > 1e-3f) {
+                control.sub.transform.RotateAround(
+                    control.sub.transform.position,
+                    control.sub.transform.up,
+                    subSetVel.yaw * Time.deltaTime
+                );
+            }
+
+            // Stop physics interference (optional but recommended)
+            Rigidbody rb = control.sub.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         [JsonRpcMethod]
@@ -172,13 +190,13 @@ public class Control : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        sub.GetComponent<Rigidbody>().centerOfMass = new Vector3(0f, 0f, 0f); // adjust if needed   
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // sub.GetComponent<Rigidbody>().centerOfMass = new Vector3(sub.transform.position.x, sub.transform.position.y, sub.transform.position.z);
     }
 
     // Define the method to restart the Sub position
