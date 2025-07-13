@@ -8,4 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: b198bbb535e4d9b4194ae50e01c1f32b,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 0fe1245d7f8e6c54f8d8b4ef4e5c6166, type: 2}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AustinHarris.JsonRpc;
+using TMPro;
 
 // Define the dataclass for the Sub position
 public class SubPos {
@@ -106,29 +107,35 @@ public class Control : MonoBehaviour
     public GameObject sub;
     public GameObject Gate;
     public GameObject Pole;
+    public GameObject COM;
 
     // Define the RPC methods for communication between unity sim and the python server
-    class Rpc : JsonRpcService {
+    class Rpc : JsonRpcService
+    {
         Control control;
 
-        public Rpc(Control control) {
+        public Rpc(Control control)
+        {
             this.control = control;
         }
 
         // Define the getSubPos method to get the Sub position within the simulation
         [JsonRpcMethod]
-        public SubPos getSubPos() {
+        public SubPos getSubPos()
+        {
             return new SubPos(control.sub.transform.position.x, control.sub.transform.position.y, control.sub.transform.position.z);
         }
 
         [JsonRpcMethod]
-        public SubRot getSubRot() {
+        public SubRot getSubRot()
+        {
             return new SubRot(control.sub.transform.rotation.eulerAngles.x, control.sub.transform.rotation.eulerAngles.y, control.sub.transform.rotation.eulerAngles.z);
         }
 
         // Define the getSubMeasuredVel method to get the Sub measured velocity within the simulation
         [JsonRpcMethod]
-        public SubMeasuredVel getSubMeasuredVel() {
+        public SubMeasuredVel getSubMeasuredVel()
+        {
             return new SubMeasuredVel(
                 control.sub.GetComponent<Rigidbody>().velocity.x,
                 control.sub.GetComponent<Rigidbody>().velocity.y,
@@ -141,27 +148,21 @@ public class Control : MonoBehaviour
 
         // Define the setSubSetVel method to set the Sub velocity within the simulation
         [JsonRpcMethod]
-        public void setSubSetVel(SubSetVel subSetVel) {
+        public void setSubSetVel(SubSetVel subSetVel)
+        {
             Vector3 linear = new Vector3(subSetVel.x, subSetVel.y, subSetVel.z);
 
             Debug.Log($"Received setSubSetVel: Linear={linear}, Yaw={subSetVel.yaw}");
 
-            // Move linearly in world space
-            control.sub.transform.position += linear * Time.deltaTime;
+            control.sub.transform.Translate(
+                linear * Time.deltaTime * 2 // move the sub in the direction of the linear velocity
+            );
 
-            // Rotate around the sub's own up axis (Yaw only)
-            if (Mathf.Abs(subSetVel.yaw) > 1e-3f) {
-                control.sub.transform.RotateAround(
-                    control.sub.transform.position,
-                    control.sub.transform.up,
-                    subSetVel.yaw * Time.deltaTime
-                );
-            }
-
-            // Stop physics interference (optional but recommended)
-            Rigidbody rb = control.sub.GetComponent<Rigidbody>();
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            control.sub.transform.RotateAround(
+                control.COM.transform.position,         // pivot point (Vector3)
+                control.sub.transform.up,               // axis of rotation (Vector3)
+                subSetVel.yaw                   // angle in degrees (float)
+            );
         }
 
         [JsonRpcMethod]
@@ -208,7 +209,6 @@ public class Control : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // sub.GetComponent<Rigidbody>().centerOfMass = new Vector3(sub.transform.position.x, sub.transform.position.y, sub.transform.position.z);
     }
 
     // Define the method to restart the Sub position
