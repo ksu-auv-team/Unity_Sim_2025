@@ -176,28 +176,6 @@ public class Control : MonoBehaviour
     void Awake()
     {
         rpc = new Rpc(this);
-        string[] args = Environment.GetCommandLineArgs();
-
-        foreach (string arg in args)
-        {
-            Debug.Log("Arg: " + arg);
-
-            if (arg == "-headless")
-            {
-                Debug.Log("Running in headless mode");
-                // Set flags or disable rendering features here
-                QualitySettings.vSyncCount = 0;
-                Application.targetFrameRate = 60;
-                Screen.SetResolution(1920, 1080, false);
-
-                // Disable shaders and other rendering features and turn on batch mode
-                QualitySettings.shadows = ShadowQuality.Disable;
-                QualitySettings.shadowResolution = ShadowResolution.Low;
-                QualitySettings.antiAliasing = 0;
-                QualitySettings.softParticles = false;
-                Application.batchMode = true;
-            }
-        }
     }
 
     // Start is called before the first frame update
