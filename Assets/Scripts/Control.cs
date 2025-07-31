@@ -140,9 +140,9 @@ public class Control : MonoBehaviour
                 control.sub.GetComponent<Rigidbody>().velocity.x,
                 control.sub.GetComponent<Rigidbody>().velocity.y,
                 control.sub.GetComponent<Rigidbody>().velocity.z,
-                control.sub.GetComponent<Rigidbody>().angularVelocity.x,
-                control.sub.GetComponent<Rigidbody>().angularVelocity.y,
-                control.sub.GetComponent<Rigidbody>().angularVelocity.z
+                control.sub.transform.rotation.eulerAngles.x,
+                control.sub.transform.rotation.eulerAngles.y,
+                control.sub.transform.rotation.eulerAngles.z
             );
         }
 
